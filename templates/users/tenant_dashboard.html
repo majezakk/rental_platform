@@ -1,11 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}Личный кабинет арендатора{% endblock %}
+{% block title %}Кабинет арендатора{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <h1>Личный кабинет арендатора</h1>
-    <p>Здесь вы можете просматривать свои бронирования и оставлять отзывы.</p>
-    <a href="{% url 'home' %}" class="btn btn-primary mt-3">Вернуться на главную</a>
+<div class="container mt-4">
+    <h1 class="mb-4">Кабинет арендатора</h1>
+    <div class="alert alert-info">
+        <p>Добро пожаловать! Здесь вы можете искать недвижимость для аренды и управлять своими бронированиями.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Доступные объявления</h5>
+                    <p class="card-text">Посмотрите список доступной недвижимости.</p>
+                    <a href="{% url 'listing_list' %}" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Мои бронирования</h5>
+                    <p class="card-text">Просмотр ваших текущих и прошлых бронирований.</p>
+                    <a href="#" class="btn btn-secondary">Перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

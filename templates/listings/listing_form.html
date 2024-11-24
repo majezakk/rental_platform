@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}
+        Редактирование объявления
+    {% else %}
+        Создание объявления
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>
+        {% if form.instance.pk %}
+            Редактирование объявления
+        {% else %}
+            Создание нового объявления
+        {% endif %}
+    </h1>
+    <form method="POST" enctype="multipart/form-data" class="mt-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">
+            {% if form.instance.pk %}
+                Сохранить изменения
+            {% else %}
+                Создать
+            {% endif %}
+        </button>
+        <a href="{% url 'listing_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

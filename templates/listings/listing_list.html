@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Список объявлений{% endblock %}
+
+{% block content %}
+<h1>Список доступной недвижимости</h1>
+<ul>
+    {% for listing in listings %}
+        <li>
+            <a href="{% url 'listing_detail' listing.pk %}">{{ listing.title }}</a> - {{ listing.price }} руб.
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
