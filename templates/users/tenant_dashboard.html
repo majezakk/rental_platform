@@ -10,21 +10,23 @@
     </div>
 
     <div class="row">
+        <!-- Доступные объявления -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body text-center">
                     <h5 class="card-title">Доступные объявления</h5>
-                    <p class="card-text">Посмотрите список доступной недвижимости.</p>
-                    <a href="{% url 'listing_list' %}" class="btn btn-primary">Перейти</a>
+                    <p class="card-text">Посмотрите список доступной недвижимости для аренды.</p>
+                    <a href="{% url 'listing_list' %}" class="btn btn-primary">Просмотреть объявления</a>
                 </div>
             </div>
         </div>
+        <!-- Мои бронирования -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body text-center">
                     <h5 class="card-title">Мои бронирования</h5>
-                    <p class="card-text">Просмотр ваших текущих и прошлых бронирований.</p>
-                    <a href="#" class="btn btn-secondary">Перейти</a>
+                    <p class="card-text">Просмотрите ваши текущие и прошлые бронирования.</p>
+                    <a href="{% url 'booking_list_tenant' %}" class="btn btn-secondary">Управлять бронированиями</a>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@
 <div class="container mt-4">
     <h1 class="mb-4">Кабинет арендодателя</h1>
     <div class="alert alert-success">
-        <p>Добро пожаловать! Здесь вы можете управлять своими объявлениями.</p>
+        <p>Добро пожаловать! Здесь вы можете управлять своими объявлениями и бронированиями.</p>
     </div>
 
     <div class="row">
@@ -20,6 +20,18 @@
             </div>
         </div>
         <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Бронирования</h5>
+                    <p class="card-text">Просмотр заявок на бронирование ваших объектов недвижимости.</p>
+                    <a href="{% url 'booking_list_landlord' %}" class="btn btn-secondary">Перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-body text-center">
                     <h5 class="card-title">Добавить новое объявление</h5>

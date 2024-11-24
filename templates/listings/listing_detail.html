@@ -8,16 +8,18 @@
     <p>{{ listing.description }}</p>
     <p><strong>Адрес:</strong> {{ listing.address }}</p>
     <p><strong>Цена:</strong> {{ listing.price }} руб.</p>
+
     {% if listing.image1 %}
         <img src="{{ listing.image1.url }}" alt="Изображение 1" class="img-fluid mb-3">
     {% endif %}
     {% if listing.image2 %}
         <img src="{{ listing.image2.url }}" alt="Изображение 2" class="img-fluid mb-3">
     {% endif %}
-    {% if listing.owner == user %}
-        <a href="{% url 'listing_edit' listing.pk %}" class="btn btn-warning">Редактировать</a>
-        <a href="{% url 'listing_delete' listing.pk %}" class="btn btn-danger">Удалить</a>
+
+    {% if request.user.role == 'tenant' %}
+        <a href="{% url 'create_booking' listing.pk %}" class="btn btn-primary">Забронировать</a>
     {% endif %}
+
     <a href="{% url 'listing_list' %}" class="btn btn-secondary mt-3">Вернуться к списку</a>
 </div>
 {% endblock %}

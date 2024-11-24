@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Бронирования{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Бронирования ваших объявлений</h1>
+    <ul class="list-group">
+        {% for booking in bookings %}
+            <li class="list-group-item">
+                <strong>{{ booking.listing.title }}</strong> - {{ booking.tenant.username }}
+                ({{ booking.start_date }} - {{ booking.end_date }}) 
+                - <span class="badge bg-info">{{ booking.get_status_display }}</span>
+                {% if booking.status == 'pending' %}
+                    <a href="{% url 'manage_booking' booking.pk 'approve' %}" class="btn btn-success btn-sm ms-3">Подтвердить</a>
+                    <a href="{% url 'manage_booking' booking.pk 'decline' %}" class="btn btn-danger btn-sm">Отклонить</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

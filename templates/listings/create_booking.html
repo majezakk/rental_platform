@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Создать бронирование{% endblock %}
+
+{% block content %}
+<h1>Создать бронирование</h1>
+<p>Объявление: {{ listing.title }}</p>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Забронировать</button>
+    <a href="{% url 'listing_detail' listing.pk %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}
