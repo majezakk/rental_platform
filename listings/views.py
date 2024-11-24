@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Listing, Booking
 from .forms import ListingForm, BookingForm
+from django.contrib import messages
+from datetime import date
 
 
 def listing_list(request):
@@ -56,6 +58,19 @@ def create_booking(request, pk):
     if request.user.role != 'tenant':
         return redirect('home')
 
+    # Проверка на существующее активное бронирование
+    existing_booking = Booking.objects.filter(
+        listing=listing,
+        tenant=request.user,
+        status=Booking.BookingStatus.APPROVED,
+        end_date__gte=date.today()  # Только активные бронирования
+    ).exists()
+
+    if existing_booking:
+        messages.error(request, "У вас уже есть активное бронирование для этого объекта.")
+        return redirect('listing_detail', pk=listing.pk)
+
+    # Обработка формы
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
@@ -63,6 +78,7 @@ def create_booking(request, pk):
             booking.listing = listing
             booking.tenant = request.user
             booking.save()
+            messages.success(request, "Ваше бронирование отправлено на рассмотрение.")
             return redirect('booking_list_tenant')
     else:
         form = BookingForm()
