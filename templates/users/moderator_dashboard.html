@@ -1,11 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Кабинет модератора</title>
-</head>
-<body>
-    <h1>Добро пожаловать, Модератор!</h1>
-    <p>Здесь вы можете управлять объявлениями и пользователями.</p>
-    <a href="{% url 'home' %}">На главную</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Кабинет модератора{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Кабинет модератора</h1>
+    <div class="alert alert-info">
+        <p>Здесь вы можете проверять объявления и бронирования, модерировать отзывы и управлять пользователями.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Проверка объявлений</h5>
+                    <p class="card-text">Управляйте новыми объявлениями и одобряйте их для публикации.</p>
+                    <a href="#" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Отзывы</h5>
+                    <p class="card-text">Просматривайте и модерируйте отзывы пользователей.</p>
+                    <a href="#" class="btn btn-secondary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Пользователи</h5>
+                    <p class="card-text">Управляйте учетными записями пользователей.</p>
+                    <a href="#" class="btn btn-danger">Перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

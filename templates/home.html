@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Главная страница</title>
-</head>
-<body>
-    <h1>Добро пожаловать в систему аренды помещений!</h1>
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4">Добро пожаловать в систему аренды!</h1>
     {% if user.is_authenticated %}
-        <p>Вы вошли как: {{ user.username }} ({{ user.get_role_display }})</p>
-        <a href="{% url 'logout' %}">Выйти</a> |
-        <a href="{% url 'user_dashboard' %}">Личный кабинет</a>
+        <p>Вы вошли как: <strong>{{ user.username }}</strong> ({{ user.get_role_display }})</p>
+        <a href="{% url 'user_dashboard' %}" class="btn btn-primary">Перейти в личный кабинет</a>
     {% else %}
-        <a href="{% url 'login' %}">Войти</a> |
-        <a href="{% url 'register' %}">Регистрация</a>
+        <a href="{% url 'login' %}" class="btn btn-success">Войти</a>
+        <a href="{% url 'register' %}" class="btn btn-secondary">Зарегистрироваться</a>
     {% endif %}
-</body>
-</html>
+</div>
+{% endblock %}

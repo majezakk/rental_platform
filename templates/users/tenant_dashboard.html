@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Кабинет арендатора</title>
-</head>
-<body>
-    <h1>Добро пожаловать, Арендатор!</h1>
+{% extends 'base.html' %}
+
+{% block title %}Личный кабинет арендатора{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1>Личный кабинет арендатора</h1>
     <p>Здесь вы можете просматривать свои бронирования и оставлять отзывы.</p>
-    <a href="{% url 'home' %}">На главную</a>
-</body>
-</html>
+    <a href="{% url 'home' %}" class="btn btn-primary mt-3">Вернуться на главную</a>
+</div>
+{% endblock %}

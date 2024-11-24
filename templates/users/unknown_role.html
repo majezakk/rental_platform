@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ошибка роли</title>
-</head>
-<body>
-    <h1>Ошибка!</h1>
-    <p>Неизвестная роль пользователя. Обратитесь к администратору.</p>
-    <a href="{% url 'home' %}">На главную</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Ошибка роли{% endblock %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h1 class="display-4 text-danger">Ошибка!</h1>
+    <p class="lead">У вашей учетной записи неизвестная роль. Обратитесь к администратору системы для исправления этой проблемы.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary mt-3">Вернуться на главную</a>
+</div>
+{% endblock %}
