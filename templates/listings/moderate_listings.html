@@ -1,25 +1,59 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Модерация объявлений{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     <h1>Модерация объявлений</h1>
-    <p>Здесь вы можете просматривать и одобрять или отклонять объявления.</p>
+    <p>Здесь вы можете просматривать, одобрять или отклонять объявления.</p>
 
-    <ul class="list-group mt-3">
+    <div class="row">
         {% for listing in listings %}
-            <li class="list-group-item">
-                <h5>{{ listing.title }}</h5>
-                <p>{{ listing.description }}</p>
-                <p><strong>Адрес:</strong> {{ listing.address }}</p>
-                <p><strong>Цена:</strong> {{ listing.price }} руб.</p>
-                <a href="{% url 'manage_listing' listing.pk 'approve' %}" class="btn btn-success btn-sm">Одобрить</a>
-                <a href="{% url 'manage_listing' listing.pk 'decline' %}" class="btn btn-danger btn-sm">Отклонить</a>
-            </li>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <!-- Начало карусели -->
+                    <div id="carousel-{{ listing.id }}" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% if listing.image1 %}
+                                <div class="carousel-item active">
+                                    <img src="{{ listing.image1.url }}" class="d-block w-100" style="object-fit: cover; height: 200px;" alt="Изображение 1">
+                                </div>
+                            {% endif %}
+                            {% if listing.image2 %}
+                                <div class="carousel-item">
+                                    <img src="{{ listing.image2.url }}" class="d-block w-100" style="object-fit: cover; height: 200px;" alt="Изображение 2">
+                                </div>
+                            {% endif %}
+                            {% if not listing.image1 and not listing.image2 %}
+                                <div class="carousel-item active">
+                                    <img src="{% static 'images/no_image.png' %}" class="d-block w-100" style="object-fit: cover; height: 200px;" alt="Нет изображения">
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ listing.id }}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Предыдущее</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ listing.id }}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Следующее</span>
+                        </button>
+                    </div>
+                    <!-- Конец карусели -->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ listing.title }}</h5>
+                        <p class="card-text text-truncate">{{ listing.description }}</p>
+                        <p><strong>Адрес:</strong> {{ listing.address }}</p>
+                        <p><strong>Цена:</strong> {{ listing.price }} руб.</p>
+                        <a href="{% url 'manage_listing' listing.pk 'approve' %}" class="btn btn-success btn-sm">Одобрить</a>
+                        <a href="{% url 'manage_listing' listing.pk 'decline' %}" class="btn btn-danger btn-sm">Отклонить</a>
+                    </div>
+                </div>
+            </div>
         {% empty %}
             <p>Нет объявлений, ожидающих модерации.</p>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}

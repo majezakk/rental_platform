@@ -45,7 +45,8 @@ def manage_users(request):
     if request.user.role != 'moderator':
         return redirect('home')
 
-    users = User.objects.exclude(id=request.user.id).order_by('role', 'username')  # Исключаем самого модератора
+    # Исключаем самого модератора и всех суперпользователей
+    users = User.objects.filter(is_superuser=False).exclude(id=request.user.id).order_by('role', 'username')
     return render(request, 'users/manage_users.html', {'users': users})
 
 @login_required

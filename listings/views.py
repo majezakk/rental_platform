@@ -7,12 +7,19 @@ from datetime import date
 
 
 def listing_list(request):
-    listings = Listing.objects.filter(is_available=True)
+    listings = Listing.objects.filter(is_approved=True, is_available=True)
     return render(request, 'listings/listing_list.html', {'listings': listings})
 
 def listing_detail(request, pk):
     listing = get_object_or_404(Listing, pk=pk)
-    return render(request, 'listings/listing_detail.html', {'listing': listing})
+    # Фильтруем только одобренные отзывы
+    approved_reviews = listing.reviews.filter(is_approved=True)
+
+    # Проверяем доступность объявления для арендаторов
+    if not listing.is_approved and request.user.role == 'tenant':
+        return redirect('listing_list')  # Перенаправляем на список доступных объявлений
+
+    return render(request, 'listings/listing_detail.html', {'listing': listing, 'reviews': approved_reviews})
 
 
 @login_required

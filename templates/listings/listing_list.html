@@ -1,14 +1,59 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Список объявлений{% endblock %}
+{% block title %}Список доступных объявлений{% endblock %}
 
 {% block content %}
-<h1>Список доступной недвижимости</h1>
-<ul>
-    {% for listing in listings %}
-        <li>
-            <a href="{% url 'listing_detail' listing.pk %}">{{ listing.title }}</a> - {{ listing.price }} руб.
-        </li>
-    {% endfor %}
-</ul>
+<div class="container mt-4">
+    <h1 class="mb-4">Доступные объявления</h1>
+
+    {% if listings %}
+        <div class="row">
+            {% for listing in listings %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <!-- Карусель изображений -->
+                        <div id="carousel-{{ listing.id }}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% if listing.image1 %}
+                                    <div class="carousel-item active">
+                                        <img src="{{ listing.image1.url }}" class="d-block w-100" style="object-fit: cover; height: 200px;" alt="Изображение 1">
+                                    </div>
+                                {% endif %}
+                                {% if listing.image2 %}
+                                    <div class="carousel-item">
+                                        <img src="{{ listing.image2.url }}" class="d-block w-100" style="object-fit: cover; height: 200px;" alt="Изображение 2">
+                                    </div>
+                                {% endif %}
+                                {% if not listing.image1 and not listing.image2 %}
+                                    <div class="carousel-item active">
+                                        <img src="{% static 'images/no_image.png' %}" class="d-block w-100" style="object-fit: cover; height: 200px;" alt="Нет изображения">
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ listing.id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Предыдущее</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ listing.id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Следующее</span>
+                            </button>
+                        </div>
+                        <!-- Конец карусели -->
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ listing.title }}</h5>
+                            <p class="card-text text-truncate">{{ listing.description }}</p>
+                            <p><strong>Цена:</strong> {{ listing.price }} руб.</p>
+                            <a href="{% url 'listing_detail' listing.pk %}" class="btn btn-primary btn-sm">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>На данный момент нет доступных объявлений.</p>
+    {% endif %}
+</div>
 {% endblock %}
