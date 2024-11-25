@@ -217,3 +217,20 @@ def manage_listing(request, pk, action):
         messages.success(request, f"Объявление '{listing.title}' отклонено и удалено.")
 
     return redirect('moderate_listings')
+
+
+@login_required
+def booking_history_tenant(request):
+    if request.user.role != 'tenant':
+        return redirect('home')
+
+    # Разделяем бронирования по статусам и датам
+    current_bookings = request.user.bookings.filter(status='approved', end_date__gte=date.today())
+    past_bookings = request.user.bookings.filter(status='approved', end_date__lt=date.today())
+    cancelled_bookings = request.user.bookings.filter(status='declined')
+
+    return render(request, 'listings/booking_history_tenant.html', {
+        'current_bookings': current_bookings,
+        'past_bookings': past_bookings,
+        'cancelled_bookings': cancelled_bookings,
+    })

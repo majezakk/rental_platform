@@ -18,5 +18,6 @@ urlpatterns = [
     path('reviews/manage/<int:pk>/<str:action>/', views.manage_review, name='manage_review'),
     path('moderate/', views.moderate_listings, name='moderate_listings'),
     path('manage/<int:pk>/<str:action>/', views.manage_listing, name='manage_listing'),
+    path('bookings/history/', views.booking_history_tenant, name='booking_history_tenant'),
 
 ]

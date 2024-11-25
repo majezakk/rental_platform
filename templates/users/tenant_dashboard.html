@@ -26,8 +26,9 @@
         <div class="col-md-4 d-flex">
             <div class="card flex-fill d-flex flex-column">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Мои бронирования</h5>
-                    <p class="card-text">Просмотрите ваши текущие и прошлые бронирования.</p>
+                    <h5 class="card-title">История бронирований</h5>
+                    <p class="card-text">Просмотрите историю ваших бронирований.</p>
+                    <a href="{% url 'booking_history_tenant' %}" class="btn btn-info">История</a>
                 </div>
                 <div class="card-footer mt-auto text-center">
                     <a href="{% url 'booking_list_tenant' %}" class="btn btn-secondary">Управлять бронированиями</a>

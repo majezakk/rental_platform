@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}История бронирований{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>История бронирований</h1>
+
+    <!-- Текущие бронирования -->
+    <h3 class="mt-4">Текущие бронирования</h3>
+    <ul class="list-group mb-4">
+        {% for booking in current_bookings %}
+            <li class="list-group-item">
+                <strong>{{ booking.listing.title }}</strong> ({{ booking.start_date }} - {{ booking.end_date }})
+                <p><strong>Адрес:</strong> {{ booking.listing.address }}</p>
+                <p><strong>Цена:</strong> {{ booking.listing.price }} руб.</p>
+                <span class="badge bg-success">Активное</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">У вас нет текущих бронирований.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Завершенные бронирования -->
+    <h3 class="mt-4">Завершенные бронирования</h3>
+    <ul class="list-group mb-4">
+        {% for booking in past_bookings %}
+            <li class="list-group-item">
+                <strong>{{ booking.listing.title }}</strong> ({{ booking.start_date }} - {{ booking.end_date }})
+                <p><strong>Адрес:</strong> {{ booking.listing.address }}</p>
+                <p><strong>Цена:</strong> {{ booking.listing.price }} руб.</p>
+                <span class="badge bg-secondary">Завершено</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Завершенных бронирований нет.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Отмененные бронирования -->
+    <h3 class="mt-4">Отмененные бронирования</h3>
+    <ul class="list-group">
+        {% for booking in cancelled_bookings %}
+            <li class="list-group-item">
+                <strong>{{ booking.listing.title }}</strong> ({{ booking.start_date }} - {{ booking.end_date }})
+                <p><strong>Адрес:</strong> {{ booking.listing.address }}</p>
+                <p><strong>Цена:</strong> {{ booking.listing.price }} руб.</p>
+                <span class="badge bg-danger">Отменено</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">У вас нет отмененных бронирований.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
