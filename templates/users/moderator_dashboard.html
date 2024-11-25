@@ -9,34 +9,52 @@
         <p>Добро пожаловать! Здесь вы можете проверять объявления, отзывы и управлять пользователями.</p>
     </div>
 
-    <div class="row">
+    <div class="row d-flex justify-content-between">
         <!-- Модерация объявлений -->
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-3 d-flex">
+            <div class="card flex-fill d-flex flex-column">
                 <div class="card-body text-center">
                     <h5 class="card-title">Объявления</h5>
                     <p class="card-text">Проверка новых объявлений перед публикацией.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
                     <a href="{% url 'moderate_listings' %}" class="btn btn-primary">Перейти</a>
                 </div>
             </div>
         </div>
         <!-- Модерация отзывов -->
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-3 d-flex">
+            <div class="card flex-fill d-flex flex-column">
                 <div class="card-body text-center">
                     <h5 class="card-title">Отзывы</h5>
                     <p class="card-text">Проверка и управление отзывами.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
                     <a href="{% url 'moderate_reviews' %}" class="btn btn-secondary">Перейти</a>
                 </div>
             </div>
         </div>
         <!-- Управление пользователями -->
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-3 d-flex">
+            <div class="card flex-fill d-flex flex-column">
                 <div class="card-body text-center">
                     <h5 class="card-title">Пользователи</h5>
                     <p class="card-text">Просмотр и управление учетными записями.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
                     <a href="{% url 'manage_users' %}" class="btn btn-danger">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <!-- Редактирование профиля -->
+        <div class="col-md-3 d-flex">
+            <div class="card flex-fill d-flex flex-column">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Редактировать профиль</h5>
+                    <p class="card-text">Обновите ФИО, номер телефона или email.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
+                    <a href="{% url 'edit_profile' %}" class="btn btn-success">Редактировать</a>
                 </div>
             </div>
         </div>

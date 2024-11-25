@@ -9,24 +9,40 @@
         <p>Добро пожаловать! Здесь вы можете искать недвижимость для аренды и управлять своими бронированиями.</p>
     </div>
 
-    <div class="row">
+    <div class="row d-flex justify-content-between">
         <!-- Доступные объявления -->
-        <div class="col-md-6">
-            <div class="card">
+        <div class="col-md-4 d-flex">
+            <div class="card flex-fill d-flex flex-column">
                 <div class="card-body text-center">
                     <h5 class="card-title">Доступные объявления</h5>
                     <p class="card-text">Посмотрите список доступной недвижимости для аренды.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
                     <a href="{% url 'listing_list' %}" class="btn btn-primary">Просмотреть объявления</a>
                 </div>
             </div>
         </div>
         <!-- Мои бронирования -->
-        <div class="col-md-6">
-            <div class="card">
+        <div class="col-md-4 d-flex">
+            <div class="card flex-fill d-flex flex-column">
                 <div class="card-body text-center">
                     <h5 class="card-title">Мои бронирования</h5>
                     <p class="card-text">Просмотрите ваши текущие и прошлые бронирования.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
                     <a href="{% url 'booking_list_tenant' %}" class="btn btn-secondary">Управлять бронированиями</a>
+                </div>
+            </div>
+        </div>
+        <!-- Редактирование профиля -->
+        <div class="col-md-4 d-flex">
+            <div class="card flex-fill d-flex flex-column">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Редактировать профиль</h5>
+                    <p class="card-text">Обновите свои личные данные, такие как ФИО, номер телефона или email.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
+                    <a href="{% url 'edit_profile' %}" class="btn btn-success">Редактировать профиль</a>
                 </div>
             </div>
         </div>

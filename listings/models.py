@@ -1,6 +1,9 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+import os
 
 class Listing(models.Model):
     title = models.CharField(max_length=100, verbose_name="Название")
@@ -22,6 +25,16 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.title
+
+# Сигналы для удаления изображений
+@receiver(post_delete, sender=Listing)
+def delete_images_with_listing(sender, instance, **kwargs):
+    if instance.image1 and instance.image1.path:  # Проверяем, что файл существует
+        if os.path.isfile(instance.image1.path):
+            os.remove(instance.image1.path)
+    if instance.image2 and instance.image2.path:
+        if os.path.isfile(instance.image2.path):
+            os.remove(instance.image2.path)
 
 
 class Booking(models.Model):

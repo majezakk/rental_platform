@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, EditProfileForm, EditProfileFormModerator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
@@ -69,3 +69,21 @@ def delete_user(request, pk):
     user.delete()
     messages.success(request, f"Пользователь {user.username} удален.")
     return redirect('manage_users')
+
+@login_required
+def edit_profile(request):
+    if request.user.role == 'moderator':
+        form_class = EditProfileFormModerator
+    else:
+        form_class = EditProfileForm
+
+    if request.method == 'POST':
+        form = form_class(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Ваш профиль успешно обновлен!")
+            return redirect('edit_profile')
+    else:
+        form = form_class(instance=request.user)
+
+    return render(request, 'users/edit_profile.html', {'form': form})

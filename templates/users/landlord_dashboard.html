@@ -9,33 +9,54 @@
         <p>Добро пожаловать! Здесь вы можете управлять своими объявлениями и бронированиями.</p>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
+    <div class="row d-flex justify-content-between">
+        <!-- Мои объявления -->
+        <div class="col-md-4 d-flex">
+            <div class="card flex-fill d-flex flex-column">
                 <div class="card-body text-center">
                     <h5 class="card-title">Мои объявления</h5>
                     <p class="card-text">Просмотр и управление вашими объявлениями.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
                     <a href="{% url 'listing_list' %}" class="btn btn-primary">Перейти</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
+        <!-- Бронирования -->
+        <div class="col-md-4 d-flex">
+            <div class="card flex-fill d-flex flex-column">
                 <div class="card-body text-center">
                     <h5 class="card-title">Бронирования</h5>
                     <p class="card-text">Просмотр заявок на бронирование ваших объектов недвижимости.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
                     <a href="{% url 'booking_list_landlord' %}" class="btn btn-secondary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <!-- Редактировать профиль -->
+        <div class="col-md-4 d-flex">
+            <div class="card flex-fill d-flex flex-column">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Редактировать профиль</h5>
+                    <p class="card-text">Обновите свои личные данные, такие как ФИО, номер телефона или email.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
+                    <a href="{% url 'edit_profile' %}" class="btn btn-success">Редактировать</a>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Добавить новое объявление -->
     <div class="row mt-4">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
+        <div class="col-md-6 offset-md-3 d-flex">
+            <div class="card flex-fill d-flex flex-column">
                 <div class="card-body text-center">
                     <h5 class="card-title">Добавить новое объявление</h5>
                     <p class="card-text">Создайте новое объявление для аренды.</p>
+                </div>
+                <div class="card-footer mt-auto text-center">
                     <a href="{% url 'listing_create' %}" class="btn btn-success">Добавить</a>
                 </div>
             </div>

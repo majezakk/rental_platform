@@ -41,21 +41,27 @@ def listing_create(request):
 @login_required
 def listing_edit(request, pk):
     listing = get_object_or_404(Listing, pk=pk, owner=request.user)
+
     if request.method == 'POST':
         form = ListingForm(request.POST, request.FILES, instance=listing)
         if form.is_valid():
             form.save()
+            messages.success(request, "Объявление успешно обновлено!")
             return redirect('listing_detail', pk=listing.pk)
     else:
         form = ListingForm(instance=listing)
+
     return render(request, 'listings/listing_form.html', {'form': form})
 
 @login_required
 def listing_delete(request, pk):
     listing = get_object_or_404(Listing, pk=pk, owner=request.user)
+
     if request.method == 'POST':
         listing.delete()
+        messages.success(request, "Объявление успешно удалено!")
         return redirect('listing_list')
+
     return render(request, 'listings/listing_confirm_delete.html', {'listing': listing})
 
 
