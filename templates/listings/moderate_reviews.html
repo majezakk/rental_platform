@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Модерация отзывов{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Модерация отзывов</h1>
+    <p>Здесь вы можете одобрять или удалять отзывы.</p>
+
+    <ul class="list-group mt-3">
+        {% for review in reviews %}
+            <li class="list-group-item">
+                <h5><strong>{{ review.tenant.username }}</strong> оставил отзыв на <strong>{{ review.listing.title }}</strong></h5>
+                <p><strong>Рейтинг:</strong> {{ review.rating }}/5</p>
+                <p>{{ review.comment }}</p>
+                <a href="{% url 'manage_review' review.pk 'approve' %}" class="btn btn-success btn-sm">Одобрить</a>
+                <a href="{% url 'manage_review' review.pk 'delete' %}" class="btn btn-danger btn-sm">Удалить</a>
+            </li>
+        {% empty %}
+            <p>Нет отзывов, ожидающих модерации.</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

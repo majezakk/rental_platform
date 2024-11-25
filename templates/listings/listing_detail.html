@@ -21,5 +21,15 @@
     {% endif %}
 
     <a href="{% url 'listing_list' %}" class="btn btn-secondary mt-3">Вернуться к списку</a>
+    
+    {% for review in approved_reviews %}
+<div class="review">
+    <p><strong>{{ review.tenant.username }}</strong>: {{ review.rating }}/5</p>
+    <p>{{ review.comment }}</p>
+</div>
+{% empty %}
+    <p>Отзывов пока нет.</p>
+{% endfor %}
+    <a href="{% url 'create_review' listing.pk %}" class="btn btn-primary">Оставить отзыв</a>
 </div>
 {% endblock %}

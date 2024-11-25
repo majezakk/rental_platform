@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Listing, Booking
-from .forms import ListingForm, BookingForm
+from .models import Listing, Booking, Review
+from .forms import ListingForm, BookingForm, ReviewForm
 from django.contrib import messages
 from datetime import date
 
@@ -127,3 +127,80 @@ def manage_booking(request, pk, action):
 
     booking.save()  # Сохраняем изменения
     return redirect('booking_list_landlord')  # Возвращаемся к списку бронирований
+
+
+@login_required
+def create_review(request, pk):
+    listing = get_object_or_404(Listing, pk=pk)
+    if request.user.role != 'tenant':
+        return redirect('home')
+
+    # Проверка, оставлял ли арендатор уже отзыв для этого объявления
+    existing_review = Review.objects.filter(listing=listing, tenant=request.user).exists()
+    if existing_review:
+        messages.error(request, "Вы уже оставили отзыв для этого объявления.")
+        return redirect('listing_detail', pk=listing.pk)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.listing = listing
+            review.tenant = request.user
+            review.save()
+            messages.success(request, "Ваш отзыв отправлен на модерацию.")
+            return redirect('listing_detail', pk=listing.pk)
+    else:
+        form = ReviewForm()
+
+    return render(request, 'listings/create_review.html', {'form': form, 'listing': listing})
+
+@login_required
+def moderate_reviews(request):
+    if request.user.role != 'moderator':
+        return redirect('home')
+
+    reviews = Review.objects.filter(is_approved=False).order_by('-created_at')
+    return render(request, 'listings/moderate_reviews.html', {'reviews': reviews})
+
+@login_required
+def manage_review(request, pk, action):
+    if request.user.role != 'moderator':
+        return redirect('home')
+
+    review = get_object_or_404(Review, pk=pk)
+    if action == 'approve':
+        review.is_approved = True
+        review.save()
+        messages.success(request, "Отзыв одобрен.")
+    elif action == 'delete':
+        review.delete()
+        messages.success(request, "Отзыв удален.")
+
+    return redirect('moderate_reviews')
+
+
+@login_required
+def moderate_listings(request):
+    if request.user.role != 'moderator':
+        return redirect('home')
+
+    listings = Listing.objects.filter(is_approved=False)
+    return render(request, 'listings/moderate_listings.html', {'listings': listings})
+
+@login_required
+def manage_listing(request, pk, action):
+    if request.user.role != 'moderator':
+        return redirect('home')
+
+    listing = get_object_or_404(Listing, pk=pk)
+
+    if action == 'approve':
+        listing.is_approved = True
+        listing.save()
+        messages.success(request, f"Объявление '{listing.title}' одобрено.")
+    elif action == 'decline':
+        listing.delete()
+        messages.success(request, f"Объявление '{listing.title}' отклонено и удалено.")
+
+    return redirect('moderate_listings')

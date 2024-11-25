@@ -18,6 +18,7 @@ class Listing(models.Model):
     is_available = models.BooleanField(default=True, verbose_name="Доступно для аренды")
     image1 = models.ImageField(upload_to='listings/images/', verbose_name="Изображение 1", blank=True, null=True)
     image2 = models.ImageField(upload_to='listings/images/', verbose_name="Изображение 2", blank=True, null=True)
+    is_approved = models.BooleanField(default=False, verbose_name="Одобрено модератором")
 
     def __str__(self):
         return self.title
@@ -38,3 +39,15 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.listing.title} - {self.tenant.username} ({self.get_status_display()})"
+
+
+class Review(models.Model):
+    listing = models.ForeignKey('Listing', on_delete=models.CASCADE, related_name='reviews', verbose_name="Объявление")
+    tenant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews', verbose_name="Арендатор")
+    rating = models.PositiveSmallIntegerField(verbose_name="Рейтинг", choices=[(i, i) for i in range(1, 6)])
+    comment = models.TextField(verbose_name="Комментарий", blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    is_approved = models.BooleanField(default=False, verbose_name="Одобрено модератором")
+
+    def __str__(self):
+        return f"{self.listing.title} - {self.tenant.username} ({self.rating}/5)"

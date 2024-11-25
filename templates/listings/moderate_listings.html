@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Модерация объявлений{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Модерация объявлений</h1>
+    <p>Здесь вы можете просматривать и одобрять или отклонять объявления.</p>
+
+    <ul class="list-group mt-3">
+        {% for listing in listings %}
+            <li class="list-group-item">
+                <h5>{{ listing.title }}</h5>
+                <p>{{ listing.description }}</p>
+                <p><strong>Адрес:</strong> {{ listing.address }}</p>
+                <p><strong>Цена:</strong> {{ listing.price }} руб.</p>
+                <a href="{% url 'manage_listing' listing.pk 'approve' %}" class="btn btn-success btn-sm">Одобрить</a>
+                <a href="{% url 'manage_listing' listing.pk 'decline' %}" class="btn btn-danger btn-sm">Отклонить</a>
+            </li>
+        {% empty %}
+            <p>Нет объявлений, ожидающих модерации.</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
