@@ -3,16 +3,54 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <h2>Регистрация</h2>
-        <form method="POST" class="mt-4">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
-        </form>
-        <div class="mt-3 text-center">
-            <a href="{% url 'login' %}">Уже есть аккаунт? Войти</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header text-center bg-primary text-white">
+                    <h3 class="mb-0">Регистрация</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                            <small class="form-text text-muted">{{ form.username.help_text }}</small>
+                        </div>
+                        <div class="mb-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.role.label_tag }}
+                            {{ form.role }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.password1.label_tag }}
+                            {{ form.password1 }}
+                            <small class="form-text text-muted">
+                                <ul class="m-0">
+                                    <li>Пароль не должен быть слишком похож на вашу личную информацию.</li>
+                                    <li>Должен содержать минимум 8 символов.</li>
+                                    <li>Не должен быть слишком простым.</li>
+                                    <li>Не может состоять только из цифр.</li>
+                                </ul>
+                            </small>
+                        </div>
+                        <div class="mb-3">
+                            {{ form.password2.label_tag }}
+                            {{ form.password2 }}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2">Зарегистрироваться</button>
+                    </form>
+                </div>
+                <div class="card-footer text-center bg-light">
+                    <small class="text-muted">
+                        Уже есть аккаунт? <a href="{% url 'login' %}" class="text-primary text-decoration-none">Войти</a>
+                    </small>
+                </div>
+            </div>
         </div>
     </div>
 </div>
